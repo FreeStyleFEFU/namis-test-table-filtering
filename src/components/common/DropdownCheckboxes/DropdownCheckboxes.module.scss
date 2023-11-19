@@ -1,0 +1,7 @@
+@use "../../../styles/utils" as utils;
+@use "../../../styles/media" as media;
+@use "../../../styles/variables" as variables;
+
+.optionSelected {
+  background-color: variables.$color-background-white;
+}

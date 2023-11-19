@@ -1,0 +1,44 @@
+@use '../../../styles/variables' as vars;
+@use '../../../styles/media' as media;
+
+.root {
+  max-width: 645px;
+  padding-inline: 24px;
+  margin-inline: auto;
+}
+
+.description {
+  margin-top: 24px;
+}
+
+.table {
+  width: 645px;
+  margin-bottom: 20px;
+  border: 1px solid vars.$color-border-white;
+  border-collapse: collapse;
+  margin-top: 24px;
+}
+
+.tableHeadItem {
+  --width: auto;
+
+  font-weight: bold;
+  padding: 5px;
+  background: vars.$color-background-white;
+  border: 1px solid vars.$color-border-white;
+  width: var(--width);
+}
+
+.tableItem {
+  border: 1px solid vars.$color-border-white;
+  padding: 5px;
+  text-align: center;
+}
+
+.select {
+  margin-top: 24px;
+}
+
+.input {
+  border: 1px solid black;
+}

@@ -1,0 +1,66 @@
+@use "../../../styles/utils" as utils;
+@use "../../../styles/media" as media;
+@use "../../../styles/variables" as variables;
+
+.root {
+    color: black;
+    display: flex;
+    position: relative;
+    width: 100%;
+    min-height: 36px;
+}
+
+.toggler {
+    $size: 12px;
+
+    color: currentColor;
+    height: $size;
+    pointer-events: none;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: $size;
+}
+
+.titleContainer {
+    border: 1px solid variables.$color-border-white;
+    cursor: pointer;
+    padding: 8px 16px;
+    width: 100%;
+}
+
+.title {
+    font-size: utils.to-rem(16px);
+    font-weight: variables.$font-weight-semi-bold;
+    margin: 0;
+}
+
+.list {
+    background-color: white;
+    box-shadow: 0 8px 50px -10px rgba(black, 0.15);
+    border: 1px solid variables.$color-border-white;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: 1;
+    list-style: none;
+    padding-left: 0;
+}
+
+.option {
+    color: rgba(black, 0.5);
+    cursor: pointer;
+    font-size: utils.to-rem(16px);
+    padding: 8px 16px;
+
+    &:hover {
+        background-color: variables.$color-background-white;
+        color: black;
+    }}
+
+.optionDisabled {
+    background-color: variables.$color-background-white;
+    cursor: default;
+    pointer-events: none;
+}
