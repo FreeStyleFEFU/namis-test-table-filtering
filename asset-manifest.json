@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/namis-test-table-filtering/static/css/main.eaf76d3f.css",
-    "main.js": "/namis-test-table-filtering/static/js/main.687b0c34.js",
+    "main.css": "/namis-test-table-filtering/static/css/main.92b214a5.css",
+    "main.js": "/namis-test-table-filtering/static/js/main.fa1d6938.js",
     "index.html": "/namis-test-table-filtering/index.html",
-    "main.eaf76d3f.css.map": "/namis-test-table-filtering/static/css/main.eaf76d3f.css.map",
-    "main.687b0c34.js.map": "/namis-test-table-filtering/static/js/main.687b0c34.js.map"
+    "main.92b214a5.css.map": "/namis-test-table-filtering/static/css/main.92b214a5.css.map",
+    "main.fa1d6938.js.map": "/namis-test-table-filtering/static/js/main.fa1d6938.js.map"
   },
   "entrypoints": [
-    "static/css/main.eaf76d3f.css",
-    "static/js/main.687b0c34.js"
+    "static/css/main.92b214a5.css",
+    "static/js/main.fa1d6938.js"
   ]
 }
