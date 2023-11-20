@@ -1,4 +1,4 @@
-import React, {CSSProperties, FC, useEffect, useMemo, useState} from "react";
+import React, { CSSProperties, FC, useEffect, useMemo, useState } from "react";
 
 import { DataItem, ReactLevels } from "../../../types/data";
 import { SortIds } from "../../../types/select";
@@ -56,60 +56,70 @@ export const Table: FC<TableProps> = (props) => {
     useState<SelectItem>(sortByIdAOrTimeSelectItems[0]);
   const [selectedTitleSortItem, setSelectedTitleSortItem] =
     useState<SelectItem>(sortByStringSelectItems[0]);
-
-  const [inputValue, setInputValue] = useState("");
-
   const [selectedLevel, setSelectedLevel] = useState<SelectItem>(
     reactLevelItems[0],
   );
 
+  const [inputValue, setInputValue] = useState("");
+
   const [selectedTags, setSelectedTags] = useState<Checkbox[]>([]);
 
-  const technicalTaskSelectedItemDescription = useMemo(() =>
-    technicalTaskSelectItems.find(
-      (item) => item.value === technicalTaskSelectedItem.value,
-    )?.description ?? "", [technicalTaskSelectedItem]);
+  const technicalTaskSelectedItemDescription = useMemo(
+    () =>
+      technicalTaskSelectItems.find(
+        (item) => item.value === technicalTaskSelectedItem.value,
+      )?.description ?? "",
+    [technicalTaskSelectedItem],
+  );
+
+  let selectItems = sortByIdAOrTimeSelectItems;
+  let selectedItem = selectedIdOrTimeSortItem;
 
   let filteredItems = [...items];
 
-  if (technicalTaskSelectedItem.value === 1) {
+  if (value === 1) {
     if (selectedIdOrTimeSortItem.value === SortIds.Increasing) {
       filteredItems = sortById(filteredItems, "inc");
     } else if (selectedIdOrTimeSortItem.value === SortIds.Descending) {
       filteredItems = sortById(filteredItems, "desc");
     }
-  } else if (technicalTaskSelectedItem.value === 2) {
+  } else if (value === 2) {
+    selectItems = sortByStringSelectItems;
+    selectedItem = selectedTitleSortItem;
+
     if (selectedTitleSortItem.value === SortIds.Increasing) {
       filteredItems = sortByString(filteredItems, "inc");
     } else if (selectedTitleSortItem.value === SortIds.Descending) {
       filteredItems = sortByString(filteredItems, "desc");
     }
-  } else if (technicalTaskSelectedItem.value === 3) {
+  } else if (value === 3) {
     if (selectedIdOrTimeSortItem.value === SortIds.Increasing) {
       filteredItems = sortByDate(filteredItems, "inc");
     } else if (selectedIdOrTimeSortItem.value === SortIds.Descending) {
       filteredItems = sortByDate(filteredItems, "desc");
     }
-  } else if (technicalTaskSelectedItem.value === 4) {
+  } else if (value === 4) {
     filteredItems = filteredItems.filter(({ title }) =>
       title !== null
         ? title.toLowerCase().includes(inputValue.toLowerCase())
         : inputValue.length === 0,
     );
-  } else if (technicalTaskSelectedItem.value === 5) {
+  } else if (value === 5) {
     filteredItems = filteredItems.filter(({ description }) =>
       description !== null
         ? description.replaceAll(" ", "").includes(inputValue)
         : inputValue.length === 0,
     );
-  } else if (
-    technicalTaskSelectedItem.value === 6 &&
-    selectedLevel.value !== ReactLevels.None
-  ) {
-    filteredItems = filteredItems.filter(
-      ({ reactLevel }) => reactLevel === selectedLevel.value,
-    );
-  } else if (technicalTaskSelectedItem.value === 7 && selectedTags.length > 0) {
+  } else if (value === 6) {
+    selectItems = reactLevelItems;
+    selectedItem = selectedLevel;
+
+    if (selectedLevel.value !== ReactLevels.None) {
+      filteredItems = filteredItems.filter(
+        ({ reactLevel }) => reactLevel === selectedLevel.value,
+      );
+    }
+  } else if (value === 7 && selectedTags.length > 0) {
     const selectedTagsValues = selectedTags.map(({ value }) => value);
 
     filteredItems = filteredItems.filter(({ tags }) =>
@@ -118,10 +128,9 @@ export const Table: FC<TableProps> = (props) => {
   }
 
   const onSelectedSortItemChange = (item: SelectItem) => {
-    if (value !== 2) setSelectedIdOrTimeSortItem(item);
-    else {
-      setSelectedTitleSortItem(item);
-    }
+    if (value === 2) setSelectedTitleSortItem(item);
+    else if (value === 6) setSelectedLevel(item);
+    else setSelectedIdOrTimeSortItem(item);
   };
 
   useEffect(() => {
@@ -144,14 +153,10 @@ export const Table: FC<TableProps> = (props) => {
         {technicalTaskSelectedItemDescription}
       </p>
 
-      {(value === 1 || value === 2 || value === 3) && (
+      {(value === 1 || value === 2 || value === 3 || value === 6) && (
         <Select
-          items={
-            value !== 2 ? sortByIdAOrTimeSelectItems : sortByStringSelectItems
-          }
-          selectedItem={
-            value !== 2 ? selectedIdOrTimeSortItem : selectedTitleSortItem
-          }
+          items={selectItems}
+          selectedItem={selectedItem}
           onChange={onSelectedSortItemChange}
           className={styles.sortSelect}
         />
@@ -162,15 +167,6 @@ export const Table: FC<TableProps> = (props) => {
           className={styles.input}
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
-        />
-      )}
-
-      {value === 6 && (
-        <Select
-          items={reactLevelItems}
-          selectedItem={selectedLevel}
-          onChange={setSelectedLevel}
-          className={styles.select}
         />
       )}
 
